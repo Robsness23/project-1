@@ -1,4 +1,42 @@
-//! 1. Generate a Grid:
+// !MVP GRID
+// DOM elements
+const grid = document.querySelector('.grid')
+const cells = []
+
+// Grid variables
+const width = 3
+const totalCells = width * width
+
+
+// Function to generate the grid, assign eventListener to each 
+// div & assign 1st click event to player1 and 2nd click event to player2
+
+let click = 3
+const player1 = "X"
+const player2 = "O"
+
+function generateGrid() {
+  for (let i = 1; i < totalCells + 1; i++) {
+    const cell = document.createElement('div')
+    grid.appendChild(cell)
+    cells.push(cell)
+    cell.addEventListener('click', () => {
+      click = click + 1
+      if (click % 2 !== 0) {
+        cell.innerHTML = player2   
+      } else if (click % 2 === 0) {
+        cell.innerHTML = player1
+      }
+    })
+  }
+}
+generateGrid()
+
+// ! MVP Game Logic 
+
+
+
+//! 1. Ultimate Grid:
 //  3x3 grid, which has 3x3 grids within each of those  (81 different squares in total)
 
 //  fill grid with 81 cells
@@ -11,7 +49,6 @@
 // for i it to 0 to totalCells - 1 {
 //  const cell = document.createElement('div')
 // cell.classList.add('cell')
-// cell.innerHTML = i
 //  grid.appendChild(cell)
 // cells.push(cell)
 // }
