@@ -19,17 +19,22 @@ const player1Array = []
 const player2Array = []
 
 
-// Grid variables
+// Global variables
 const width = 3
 const totalCells = width * width
-
-
-// Function to generate the grid, assign eventListener to each 
-// div & assign 1st click event to player1 and 2nd click event to player2
-
 let click = 3
 const player1 = "X"
 const player2 = "O"
+
+
+// 1. Function to generate the grid, assign eventListener to each 
+// div & assign 1st click event to player1 and 2nd click event to player2
+// 2. Adds symbols for each player 
+// 3. Sets the attribute ID with the index number
+// 4. Assigns player2 and player1 based on the number of clicks and whether they can 
+//    be divided by the modular 
+// 5. Calling other functions within this function as this is the function where all
+//    the magic happens
 
 function generateGrid() {
   for (let i = 1; i < totalCells + 1; i++) {
@@ -70,10 +75,12 @@ function checkWinnerPlayer1 () {
   if (player1HasWon[0]) {
     setTimeout(function(){
       alert('X is the winner')
+      // window.location.reload()
     }, 50);
   } else if (player1Array.length + player2Array.length === 9) {
     setTimeout(function(){
       alert('It\'s a draw')
+      // window.location.reload()
     }, 50);
   }
 }
@@ -90,10 +97,10 @@ function checkWinnerPlayer2 () {
   if (player2HasWon[0]) {
     setTimeout(function(){  
       alert('O is the winner')
+      // window.location.reload()
     }, 50);
   } 
 }
-
 
 
 //! 1. Ultimate Grid:

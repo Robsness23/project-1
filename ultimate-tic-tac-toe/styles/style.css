@@ -12,6 +12,7 @@ h1 {
   justify-content: center;
   align-items: center;
   font-family: 'Bungee Inline', cursive;
+  color: #270757a5;
 }
 
 .grid-wrapper {
@@ -22,21 +23,21 @@ h1 {
 }
 .grid {
   align-items: center;
-  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 20px 0 rgba(207, 166, 228, 0.864);
   display: flex;
   flex-wrap: wrap;
-  height: 100%;
+  height: 80%;
   justify-content: center;
   height: 500px;
   width: 500px;
 }
 
 .grid div {
-  border: 2px black;
-  border-right-style: solid;
-  border-bottom-style: solid;
-  height: 33%;
-  width: 33%;
+  flex-wrap: wrap;
+  border: 1px solid #d5c3f0;
+  flex-grow: 1;
+  height: 33.33%;
+  width: 33.33%;
 }
 .symbols {
   font-size: 70px;
@@ -44,12 +45,10 @@ h1 {
   justify-content: center;
   align-items: center;
   font-family: 'Bungee Inline', cursive;
+  color: #270757a5;
 
 }
-
 button{
   display: flex;
   background-color: aquamarine;
-  justify-content: center;
-  align-items: center;
 }
