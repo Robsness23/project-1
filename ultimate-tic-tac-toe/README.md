@@ -15,7 +15,11 @@
 </ul>
 
 <h2>WHITEBOARDED CONCEPT 📌</h2>
-<img src="images/concept.png" />     
+<h4>Minimum Viable Product Concept</h4>
+<img src="images/mvp-concept.png" /> 
+
+<h4>Ultimate Goal Concept</h4>
+<img src="images/ultimate-goal-concept.png" /> 
 
 <h2>RULE OF THE GAME 🎲</h2>
 <ul>

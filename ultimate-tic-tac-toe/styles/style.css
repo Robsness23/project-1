@@ -38,3 +38,18 @@ h1 {
   height: 33%;
   width: 33%;
 }
+.symbols {
+  font-size: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Bungee Inline', cursive;
+
+}
+
+button{
+  display: flex;
+  background-color: aquamarine;
+  justify-content: center;
+  align-items: center;
+}

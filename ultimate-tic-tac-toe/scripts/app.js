@@ -2,6 +2,22 @@
 // DOM elements
 const grid = document.querySelector('.grid')
 const cells = []
+const winningCombos = [
+  ['1', '2', '3'],
+  ['4', '5', '6'],
+  ['7', '8', '9'],
+  ['1', '5', '9'],
+  ['3', '5', '7'],
+  ['1', '4', '7'],
+  ['2', '5', '8'],
+  ['3', '6', '9']
+]
+console.log(grid)
+console.log(cells)
+console.log(winningCombos)
+const player1Array = []
+const player2Array = []
+
 
 // Grid variables
 const width = 3
@@ -20,19 +36,63 @@ function generateGrid() {
     const cell = document.createElement('div')
     grid.appendChild(cell)
     cells.push(cell)
-    cell.addEventListener('click', () => {
+    cell.addEventListener('click', (event) => {
+      cell.classList.add('symbols')
+      cell.setAttribute('id', i)
       click = click + 1
       if (click % 2 !== 0) {
-        cell.innerHTML = player2   
+        cell.innerHTML = player2
+        player2Array.push(event.target.id)  
+        console.log(player2Array)
       } else if (click % 2 === 0) {
         cell.innerHTML = player1
+        player1Array.push(event.target.id)
+        console.log(player1Array)
       }
+      checkWinnerPlayer1()
+      checkWinnerPlayer2()
     })
   }
 }
 generateGrid()
 
-// ! MVP Game Logic 
+
+// 1. Creating subArray with player1's choices and then filtering those against 
+//    the winningCombos to see whether player1 wins
+// 2. Alerting, after short timeout if player1 wins 
+// 3. Call the function in the generateGrid function
+// 4. Added draw logic
+
+function checkWinnerPlayer1 () {
+  const player1HasWon = winningCombos.filter( subArray =>
+    subArray.every(elem => player1Array.includes(elem))
+  )
+  if (player1HasWon[0]) {
+    setTimeout(function(){
+      alert('X is the winner')
+    }, 50);
+  } else if (player1Array.length + player2Array.length === 9) {
+    setTimeout(function(){
+      alert('It\'s a draw')
+    }, 50);
+  }
+}
+
+// 1. Creating subArray with player2's choices and then filtering those against 
+//    the winningCombos to see whether player2 wins
+// 2. Alerting, after short timeout if player2 wins
+// 3. Call the function in the generateGrid function
+
+function checkWinnerPlayer2 () {
+  const player2HasWon = winningCombos.filter( subArray => 
+    subArray.every(elem => player2Array.includes(elem))
+  )
+  if (player2HasWon[0]) {
+    setTimeout(function(){  
+      alert('O is the winner')
+    }, 50);
+  } 
+}
 
 
 
