@@ -13,34 +13,59 @@ h1 {
   align-items: center;
   font-family: 'Bungee Inline', cursive;
   color: #270757a5;
+  margin-bottom: 0;
 }
 
 .grid-wrapper {
   height: 100vh;
   display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.grid {
-  align-items: center;
-  box-shadow: 0 0 20px 0 rgba(207, 166, 228, 0.864);
-  display: flex;
   flex-wrap: wrap;
-  height: 80%;
   justify-content: center;
-  height: 500px;
-  width: 500px;
+  align-items: center;
 }
 
-.grid div {
+.bigGrid {
+  align-items: center;
+  display: flex;
   flex-wrap: wrap;
-  border: 1px solid #d5c3f0;
+  justify-content: center;
+  box-shadow: 0 0 25px 0 rgba(207, 166, 228, 0.864);  
+  height: 100%;  
+  height: 800px;
+  width: 800px;
+}
+
+.bigGrid div {
+  display: flex;
+  flex-wrap: wrap;
+  border: 2px solid #d5c3f0;
   flex-grow: 1;
   height: 33.33%;
   width: 33.33%;
 }
+
+.weeGrid{
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  height: 100%;  
+  height: 300px;
+  width: 300px;
+}
+
+.weeGrid div {
+  display: flex;
+  flex-wrap: wrap;
+  border: 1px solid #d5c3f0;
+  flex-grow: 1;
+  height: 15%;
+  width: 15%;
+
+}
+
 .symbols {
-  font-size: 70px;
+  font-size: 30px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -48,7 +73,14 @@ h1 {
   color: #270757a5;
 
 }
-button{
+
+/* .bigGridWinSymbol {
+  font-size: 70px;
   display: flex;
-  background-color: aquamarine;
-}
+  justify-content: center;
+  align-items: center;
+  font-family: 'Bungee Inline', cursive;
+  color: #270757a5;
+} */
+
+

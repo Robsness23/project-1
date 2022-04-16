@@ -1,7 +1,32 @@
-// !MVP GRID
 // DOM elements
-const grid = document.querySelector('.grid')
+const bigGrid = document.querySelector('.bigGrid')
+const weeGrid = document.querySelector('.weeGrid')
 const cells = []
+const weeCells = []
+
+// Global variables
+
+// bigGrid
+const width = 3
+const totalCells = width * width
+
+
+
+// weeGrid 
+const weeGridWidth = 3
+const totalWeeCells = weeGridWidth * weeGridWidth
+
+
+let click = 3
+const player1 = "X"
+const player2 = "O"
+let isGameStarted = false
+const isCellClickable = true
+let lastGo = 0
+const player1Array = []
+const player2Array = []
+
+
 const winningCombos = [
   ['1', '2', '3'],
   ['4', '5', '6'],
@@ -12,19 +37,11 @@ const winningCombos = [
   ['2', '5', '8'],
   ['3', '6', '9']
 ]
-console.log(grid)
-console.log(cells)
-console.log(winningCombos)
-const player1Array = []
-const player2Array = []
-
-
-// Global variables
-const width = 3
-const totalCells = width * width
-let click = 3
-const player1 = "X"
-const player2 = "O"
+console.log('bigGrid', bigGrid)
+console.log('weeGrid', weeGrid)
+console.log('cells:', cells)
+console.log('weeCells:', weeCells)
+console.log('winningCombos', winningCombos)
 
 
 // 1. Function to generate the grid, assign eventListener to each 
@@ -36,30 +53,55 @@ const player2 = "O"
 // 5. Calling other functions within this function as this is the function where all
 //    the magic happens
 
-function generateGrid() {
-  for (let i = 1; i < totalCells + 1; i++) {
-    const cell = document.createElement('div')
-    grid.appendChild(cell)
+function generateBigGrid() {
+  for (let i = 1; i < totalCells + 1; i++) {    
+    const cell = document.createElement('div')    
+    bigGrid.appendChild(cell)    
     cells.push(cell)
-    cell.addEventListener('click', (event) => {
-      cell.classList.add('symbols')
-      cell.setAttribute('id', i)
-      click = click + 1
-      if (click % 2 !== 0) {
-        cell.innerHTML = player2
-        player2Array.push(event.target.id)  
-        console.log(player2Array)
-      } else if (click % 2 === 0) {
-        cell.innerHTML = player1
-        player1Array.push(event.target.id)
-        console.log(player1Array)
-      }
-      checkWinnerPlayer1()
-      checkWinnerPlayer2()
+    cell.addEventListener('click', () => {
+      // cell.classList.add('bigGridWinSymbol')
     })
+    for (let i = 1; i < totalCells + 1; i++) {
+      const weeCell = document.createElement('div') 
+      cell.appendChild(weeCell)
+      weeCells.push(weeCell)
+      weeCell.setAttribute('id', i)
+      // console.log(weeCell.innerHTML = i)
+      weeCell.addEventListener('click', (event)=> playGame(event, weeCell), { once: true })
+    }
   }
 }
-generateGrid()
+generateBigGrid()
+
+
+
+function playGame(event, weeCell) {  
+  playAnywhere(event, weeCell)
+  lastGo = console.log('event.target.id:', parseInt(event.target.id))
+  if (isCellClickable){    
+    weeCell.classList.add('symbols')  
+    click = click + 1
+    isGameStarted = true
+    console.log('isGameStarted', isGameStarted)
+    if (click % 2 !== 0) {
+      weeCell.innerHTML = player2
+      player2Array.push(event.target.id)  
+      console.log('player2Array', player2Array)
+    } else if (click % 2 === 0) {
+      weeCell.innerHTML = player1
+      player1Array.push(event.target.id)
+      console.log('player1Array', player1Array)
+    } 
+    
+    checkWinnerPlayer1()
+    checkWinnerPlayer2()
+  }
+}
+function playAnywhere(event, isCellClickable) {
+  return (
+    (isCellClickable)) && 
+    ((isGameStarted) || (lastGo === console.log('event.target.parentElement.id:', (event.target.parentElement.id))))
+} 
 
 
 // 1. Creating subArray with player1's choices and then filtering those against 
@@ -103,6 +145,7 @@ function checkWinnerPlayer2 () {
 }
 
 
+
 //! 1. Ultimate Grid:
 //  3x3 grid, which has 3x3 grids within each of those  (81 different squares in total)
 
@@ -133,8 +176,8 @@ function checkWinnerPlayer2 () {
 //  player2 = o
 
 // boardGrid.addEventListener('click', () => {
-  //  const player1 = first click
-  // const player2 = second click
+//  const player1 = first click
+// const player2 = second click
 // })
 
 //! 4. Set up JS logic:
