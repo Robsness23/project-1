@@ -17,13 +17,14 @@ const weeGridWidth = 3
 const totalWeeCells = weeGridWidth * weeGridWidth
 
 
-let click = 3
+let click = 1
 const player1 = "X"
 const player2 = "O"
 let isGameStarted = false
-const isCellClickable = true
-let lastGo = 0
+let isCellClickable = true
+let lastTurn = 1
 const player1Array = []
+
 const player2Array = []
 
 
@@ -58,6 +59,7 @@ function generateBigGrid() {
     const cell = document.createElement('div')    
     bigGrid.appendChild(cell)    
     cells.push(cell)
+    cell.setAttribute('id', i)
     cell.addEventListener('click', () => {
       // cell.classList.add('bigGridWinSymbol')
     })
@@ -74,34 +76,47 @@ function generateBigGrid() {
 generateBigGrid()
 
 
+function playGame(event, weeCell) {    
+  // playConditions(event, weeCell)
+  isCellClickable = true
+  console.log('last go', lastTurn) 
+  console.log('parentElement.id', parseInt(event.target.parentElement.id))
+  // console.log('player2Array', player2Array)
+  // console.log('player1Array', player1Array)
 
-function playGame(event, weeCell) {  
-  playAnywhere(event, weeCell)
-  lastGo = console.log('event.target.id:', parseInt(event.target.id))
-  if (isCellClickable){    
+  if (lastTurn !== parseInt(event.target.parentElement.id)) {
+    
+    isCellClickable = false 
+  } else if (true){
+
+  }
+  console.log(isCellClickable)
+  if (isCellClickable) {    
+    lastTurn = parseInt(event.target.id)
     weeCell.classList.add('symbols')  
     click = click + 1
     isGameStarted = true
-    console.log('isGameStarted', isGameStarted)
     if (click % 2 !== 0) {
       weeCell.innerHTML = player2
       player2Array.push(event.target.id)  
-      console.log('player2Array', player2Array)
     } else if (click % 2 === 0) {
       weeCell.innerHTML = player1
       player1Array.push(event.target.id)
-      console.log('player1Array', player1Array)
     } 
-    
-    checkWinnerPlayer1()
-    checkWinnerPlayer2()
+    // checkWinnerPlayer1()
+    // checkWinnerPlayer2()
   }
+
 }
-function playAnywhere(event, isCellClickable) {
-  return (
-    (isCellClickable)) && 
-    ((isGameStarted) || (lastGo === console.log('event.target.parentElement.id:', (event.target.parentElement.id))))
-} 
+
+// function playConditions(event, weeCell) {
+//   
+//   if ((isCellClickable) && (isGameStarted) || console.log('parentElement.id:', (lastTurn === event.target.parentElement.id))) {
+//     playGame()
+//   } else {
+//     return !isCellClickable
+//   }
+// }
 
 
 // 1. Creating subArray with player1's choices and then filtering those against 
@@ -110,39 +125,39 @@ function playAnywhere(event, isCellClickable) {
 // 3. Call the function in the generateGrid function
 // 4. Added draw logic
 
-function checkWinnerPlayer1 () {
-  const player1HasWon = winningCombos.filter( subArray =>
-    subArray.every(elem => player1Array.includes(elem))
-  )
-  if (player1HasWon[0]) {
-    setTimeout(function(){
-      alert('X is the winner')
-      // window.location.reload()
-    }, 50);
-  } else if (player1Array.length + player2Array.length === 9) {
-    setTimeout(function(){
-      alert('It\'s a draw')
-      // window.location.reload()
-    }, 50);
-  }
-}
+// function checkWinnerPlayer1 () {
+//   const player1HasWon = winningCombos.filter( subArray =>
+//     subArray.every(elem => player1Array.includes(elem))
+//   )
+//   if (player1HasWon[0]) {
+//     setTimeout(function(){
+//       alert('X is the winner')
+//       // window.location.reload()
+//     }, 50);
+//   } else if (player1Array.length + player2Array.length === 9) {
+//     setTimeout(function(){
+//       alert('It\'s a draw')
+//       // window.location.reload()
+//     }, 50);
+//   }
+// }
 
 // 1. Creating subArray with player2's choices and then filtering those against 
 //    the winningCombos to see whether player2 wins
 // 2. Alerting, after short timeout if player2 wins
 // 3. Call the function in the generateGrid function
 
-function checkWinnerPlayer2 () {
-  const player2HasWon = winningCombos.filter( subArray => 
-    subArray.every(elem => player2Array.includes(elem))
-  )
-  if (player2HasWon[0]) {
-    setTimeout(function(){  
-      alert('O is the winner')
-      // window.location.reload()
-    }, 50);
-  } 
-}
+// function checkWinnerPlayer2 () {
+//   const player2HasWon = winningCombos.filter( subArray => 
+//     subArray.every(elem => player2Array.includes(elem))
+//   )
+//   if (player2HasWon[0]) {
+//     setTimeout(function(){  
+//       alert('O is the winner')
+//       // window.location.reload()
+//     }, 50);
+//   } 
+// }
 
 
 
@@ -189,7 +204,3 @@ function checkWinnerPlayer2 () {
 
 //! 5. Announcing winner:
 // Alert something on the screen which advises which player won
-
-
-
-
