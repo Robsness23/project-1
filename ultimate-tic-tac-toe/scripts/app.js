@@ -1,6 +1,6 @@
 // DOM elements
 const bigGrid = document.querySelector('.bigGrid')
-const weeGrid = document.querySelector('.weeGrid')
+// const weeGrid = document.querySelector('.weeGrid')
 const cells = []
 const weeCells = []
 
@@ -9,8 +9,8 @@ const width = 3
 const totalCells = width * width
 
 // weeGrid 
-const weeGridWidth = 3
-const totalWeeCells = weeGridWidth * weeGridWidth
+// const weeGridWidth = 3
+// const totalWeeCells = weeGridWidth * weeGridWidth
 
 // Global variables
 let click = 1
@@ -19,8 +19,9 @@ const player2 = "O"
 let isGameStarted = false
 let isCellClickable = true
 let lastTurn = 1
-const player1WeeCellArray = [[], [], [], [], [], [], [], [], []]
-const player2WeeCellArray = [[], [], [], [], [], [], [], [], []]
+
+const player1WeeCellArray = [[], [], [], [], [], [], [], [], [], []]
+const player2WeeCellArray = [[], [], [], [], [], [], [], [], [], []]
 const player1CellWins = []
 const player2CellWins = []
 const winningWeeCellCombos = [
@@ -45,7 +46,7 @@ const winningCellCombos = [
 ]
 
 console.log('bigGrid', bigGrid)
-console.log('weeGrid', weeGrid)
+// console.log('weeGrid', weeGrid)
 console.log('cells:', cells)
 console.log('weeCells:', weeCells)
 console.log('winningWeeCellCombos', winningWeeCellCombos)
@@ -82,6 +83,7 @@ generateBigGrid()
 
 function playGame(event, weeCell) {    
   isCellClickable = true  
+
   console.log('last go', lastTurn) 
   console.log('parentElement.id', parseInt(event.target.parentElement.id)) 
 
@@ -95,26 +97,28 @@ function playGame(event, weeCell) {
   if (isCellClickable) {    
     lastTurn = parseInt(event.target.id)
     const cellId = weeCell.parentElement.id
-    const weeCellId = weeCell.id
+    const weeCellId = weeCell.id    
+    console.log(weeCellId)
+    console.log(cellId)
+    console.log('player2WeeCellArray', player2WeeCellArray)
+    console.log('player1WeeCellArray', player1WeeCellArray)
     weeCell.classList.add('symbols')  
     click = click + 1
     isGameStarted = true
     if (click % 2 !== 0) {
-      weeCell.innerHTML = player2
+      weeCell.innerHTML = player2 
       player2WeeCellArray[cellId].push(weeCellId)                
       checkWeeWinnerPlayer2(cellId)
       checkBoardWinPlayer2() 
                  
     } else if (click % 2 === 0) {
       weeCell.innerHTML = player1
-      player1WeeCellArray[cellId].push(weeCellId)                  
+      player1WeeCellArray[cellId].push(weeCellId)                
       checkWeeWinnerPlayer1(cellId)  
       checkBoardWinPlayer1()
-              
-    } 
+    }     
   }
-  console.log('player2WeeCellArray', player2WeeCellArray)
-  console.log('player1WeeCellArray', player1WeeCellArray) 
+  
   console.log('player2CellWins', player2CellWins)
   console.log('player1CellWins', player1CellWins)
 }
@@ -203,21 +207,6 @@ function checkBoardWinPlayer1 () {
 
 
 
-// ! Is this function needed? 
-// function checkIfWeeWins(weeCellsToCheck) {
-//   winningWeeCellCombos.map(weeCombos => {
-//     weeCellsToCheck.filter(weeCellId => {
-//       weeCombos.map(elem => {
-//         elem === weeCellId
-//       })
-//     })
-//     if (weeCellsToCheck.length === 3) {
-//       console.log('small winner')
-//     } else {
-//       console.log('no small winner')
-//     }
-//   })
-// }
 
 
 // !Old basic tic tac toe logic 
