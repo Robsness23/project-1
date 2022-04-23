@@ -1,6 +1,5 @@
 // DOM elements
 const bigGrid = document.querySelector('.bigGrid')
-// const weeGrid = document.querySelector('.weeGrid')
 const cells = []
 const weeCells = []
 
@@ -8,22 +7,18 @@ const weeCells = []
 const width = 3
 const totalCells = width * width
 
-// weeGrid 
-// const weeGridWidth = 3
-// const totalWeeCells = weeGridWidth * weeGridWidth
-
 // Global variables
 let click = 1
 const player1 = "X"
 const player2 = "O"
 let isGameStarted = false
 let isCellClickable = true
-let lastTurn = 1
+let lastTurn = null
 
 const player1WeeCellArray = [[], [], [], [], [], [], [], [], [], []]
 const player2WeeCellArray = [[], [], [], [], [], [], [], [], [], []]
 const player1CellWins = []
-const player2CellWins = []
+const player2CellWins = ['2', '3']
 const winningWeeCellCombos = [
   ['1', '2', '3'],
   ['4', '5', '6'],
@@ -44,13 +39,16 @@ const winningCellCombos = [
   ['2', '5', '8'],
   ['3', '6', '9']
 ]
+let disabledCells = []
+
 
 console.log('bigGrid', bigGrid)
-// console.log('weeGrid', weeGrid)
 console.log('cells:', cells)
 console.log('weeCells:', weeCells)
 console.log('winningWeeCellCombos', winningWeeCellCombos)
 console.log('winningCellCombos', winningCellCombos)
+console.log('disabledCells', disabledCells)
+
 
 
 
@@ -82,45 +80,63 @@ generateBigGrid()
 
 
 function playGame(event, weeCell) {    
-  isCellClickable = true  
-
-  console.log('last go', lastTurn) 
+  isCellClickable = true    
   console.log('parentElement.id', parseInt(event.target.parentElement.id)) 
+  
 
-  if (isGameStarted && lastTurn !== parseInt(event.target.parentElement.id)) {
+  if (isGameStarted && lastTurn !== parseInt(event.target.parentElement.id) && lastTurn || disabledCells.includes(weeCell.parentElement.id)) {
     isCellClickable = false 
-  } else if (true) {
-
-  }
+    // weeCell.parentElement.classList.add('nopeLight')
+    alert('This cell is not clickable')
+    console.log('test')
+    // maybe add setTimeout for the light to remove it after a bit
+  } 
   console.log(isCellClickable)
 
-  if (isCellClickable) {    
-    lastTurn = parseInt(event.target.id)
-    const cellId = weeCell.parentElement.id
-    const weeCellId = weeCell.id    
-    console.log(weeCellId)
-    console.log(cellId)
-    console.log('player2WeeCellArray', player2WeeCellArray)
-    console.log('player1WeeCellArray', player1WeeCellArray)
-    weeCell.classList.add('symbols')  
-    click = click + 1
-    isGameStarted = true
-    if (click % 2 !== 0) {
-      weeCell.innerHTML = player2 
-      player2WeeCellArray[cellId].push(weeCellId)                
-      checkWeeWinnerPlayer2(cellId)
-      checkBoardWinPlayer2() 
+  if (isCellClickable) {   
+    if ((lastTurn === null && !disabledCells.includes(weeCell.parentElement.id)) || lastTurn) {
+      const cellId = weeCell.parentElement.id
+      const weeCellId = weeCell.id  
+      disabledCells = player2CellWins.concat(player1CellWins) 
+      if (disabledCells.includes(weeCellId)) {
+        lastTurn = null
+      } else {
+        lastTurn = parseInt(event.target.id)
+      }
+      console.log('last turn', lastTurn)
+      weeCell.classList.add('symbols')  
+      click = click + 1
+      isGameStarted = true
+      if (click % 2 !== 0) {
+        weeCell.innerHTML = player2 
+        player2WeeCellArray[cellId].push(weeCellId)                
+        checkWeeWinnerPlayer2(cellId)
+        checkBoardWinPlayer2()  
+        // cellHasWinner2(cellId)
                  
-    } else if (click % 2 === 0) {
-      weeCell.innerHTML = player1
-      player1WeeCellArray[cellId].push(weeCellId)                
-      checkWeeWinnerPlayer1(cellId)  
-      checkBoardWinPlayer1()
-    }     
+      } else if (click % 2 === 0) {
+        weeCell.innerHTML = player1
+        player1WeeCellArray[cellId].push(weeCellId)                
+        checkWeeWinnerPlayer1(cellId)  
+        checkBoardWinPlayer1()
+      // cellHasWinner1(cellId)
+      } 
+    } else if (isGameStarted && !disabledCells.includes(lastTurn)) {
+      isCellClickable = true
+      console.log(isCellClickable)
+    // this is meant to set up the logic that if a player is sent to a disabledCell they can then click anywhere instead
+    }
+      
+  } else {
+    isCellClickable = false 
+    // weeCell.parentElement.classList.add('nopeLight')
+    alert('This cell is not clickable')  
+    console.log('test')  
   }
-  
+    
   console.log('player2CellWins', player2CellWins)
   console.log('player1CellWins', player1CellWins)
+  console.log('disabledCells', disabledCells)
 }
 
 function checkWeeWinnerPlayer2 (cellIndex) {
@@ -131,7 +147,8 @@ function checkWeeWinnerPlayer2 (cellIndex) {
     setTimeout(function(){  
       alert('O is the winner of this small grid') 
     }, 50);
-    player2CellWins.push(cellIndex)
+    player2CellWins.push(cellIndex)    
+    disabledCells.push(cellIndex)
   } else if (player2WeeCellArray[cellIndex] + player1WeeCellArray[cellIndex] === 9) {
     setTimeout(function(){
       alert('It\'s a draw for this small grid')
@@ -147,13 +164,32 @@ function checkWeeWinnerPlayer1(cellIndex) {
     setTimeout(function(){
       alert('X is the winner of this small grid')
     }, 50);
-    player1CellWins.push(cellIndex)
+    player1CellWins.push(cellIndex)  
+    disabledCells.push(cellIndex)     
   } else if (player1WeeCellArray[cellIndex] + player2WeeCellArray[cellIndex] === 9) {
     setTimeout(function(){
       alert('It\'s a draw for this small grid')
     }, 50);
   }
 }
+
+// function cellHasWinner2(cellIndex) {
+//   if (player2CellWins.includes(cellIndex)) {
+//     disabledCells.push(cellIndex)    
+//   } else if (true) {
+
+//   }
+// }
+
+// function cellHasWinner1(cellIndex) {
+//   if (player1CellWins.includes(cellIndex)) {
+//     disabledCells.push(cellIndex)
+//     isCellClickable = false    
+//   } else if (true) {
+    
+//   }
+// }
+
 
 function checkBoardWinPlayer2 () {
   const boardWinner2 = winningCellCombos.filter( subArray => 
@@ -163,9 +199,10 @@ function checkBoardWinPlayer2 () {
     setTimeout(function(){  
       alert('O is the ultimate winner!') 
     }, 1000);
+    
   } else if (player2CellWins + player1CellWins === 9) {
     setTimeout(function(){
-      alert('It\'s a draw for this small grid')
+      alert('It\'s a draw')
     }, 1000);
   }
 }
@@ -178,9 +215,10 @@ function checkBoardWinPlayer1 () {
     setTimeout(function(){  
       alert('X is the ultimate winner!') 
     }, 50);
+    
   } else if (player1CellWins + player2CellWins === 9) {
     setTimeout(function(){
-      alert('It\'s a draw for this small grid')
+      alert('It\'s a draw')
     }, 1000);
   }
 }

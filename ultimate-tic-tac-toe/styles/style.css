@@ -74,13 +74,12 @@ h1 {
 
 }
 
-/* .bigGridWinSymbol {
-  font-size: 70px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: 'Bungee Inline', cursive;
-  color: #270757a5;
-} */
+.goLight{
+  background-color: rgba(255, 246, 196, 0.846);
+}
+
+.nopeLight{
+  background-color: rgba(183, 181, 181, 0.933);
+}
 
 
