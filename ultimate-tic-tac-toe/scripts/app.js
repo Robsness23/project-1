@@ -15,10 +15,11 @@ let isGameStarted = false
 let isCellClickable = true
 let lastTurn = null
 
+// Arrays 
 const player1WeeCellArray = [[], [], [], [], [], [], [], [], [], []]
 const player2WeeCellArray = [[], [], [], [], [], [], [], [], [], []]
 const player1CellWins = []
-const player2CellWins = ['2', '3']
+const player2CellWins = []
 const winningWeeCellCombos = [
   ['1', '2', '3'],
   ['4', '5', '6'],
@@ -47,13 +48,12 @@ console.log('cells:', cells)
 console.log('weeCells:', weeCells)
 console.log('winningWeeCellCombos', winningWeeCellCombos)
 console.log('winningCellCombos', winningCellCombos)
-console.log('disabledCells', disabledCells)
 
 
 
 
-// 1. Function to generate the grid, assign eventListener to each 
-// div & assign 1st click event to player1 and 2nd click event to player2
+
+// 1. Function to generate the grid in a for loop, each cell is 
 // 2. Adds symbols for each player 
 // 3. Sets the attribute ID with the index number
 // 4. Assigns player2 and player1 based on the number of clicks and whether they can 
@@ -78,30 +78,33 @@ function generateBigGrid() {
 }
 generateBigGrid()
 
-
+//  Two big if statements
 function playGame(event, weeCell) {    
   isCellClickable = true    
   console.log('parentElement.id', parseInt(event.target.parentElement.id)) 
   
-
+  // If these conditions aren't met it moves to next if sta
+  // After this isCellClickable is still false, then it moves to next if
   if (isGameStarted && lastTurn !== parseInt(event.target.parentElement.id) && lastTurn || disabledCells.includes(weeCell.parentElement.id)) {
     isCellClickable = false 
     // weeCell.parentElement.classList.add('nopeLight')
     alert('This cell is not clickable')
-    console.log('test')
     // maybe add setTimeout for the light to remove it after a bit
   } 
   console.log(isCellClickable)
 
   if (isCellClickable) {   
+    // click anywhere for left condition ORRRR  cell not complete so I can play in that cell
     if ((lastTurn === null && !disabledCells.includes(weeCell.parentElement.id)) || lastTurn) {
       const cellId = weeCell.parentElement.id
       const weeCellId = weeCell.id  
       disabledCells = player2CellWins.concat(player1CellWins) 
+      // checking whether cell you are being sent to is playable or not
       if (disabledCells.includes(weeCellId)) {
         lastTurn = null
       } else {
         lastTurn = parseInt(event.target.id)
+        // weeCell.parentElement.classList.add('goLight')
       }
       console.log('last turn', lastTurn)
       weeCell.classList.add('symbols')  
@@ -112,26 +115,24 @@ function playGame(event, weeCell) {
         player2WeeCellArray[cellId].push(weeCellId)                
         checkWeeWinnerPlayer2(cellId)
         checkBoardWinPlayer2()  
-        // cellHasWinner2(cellId)
                  
       } else if (click % 2 === 0) {
         weeCell.innerHTML = player1
         player1WeeCellArray[cellId].push(weeCellId)                
         checkWeeWinnerPlayer1(cellId)  
         checkBoardWinPlayer1()
-      // cellHasWinner1(cellId)
       } 
     } else if (isGameStarted && !disabledCells.includes(lastTurn)) {
+      weeCell.parentElement.classList.add('goLight')
       isCellClickable = true
       console.log(isCellClickable)
     // this is meant to set up the logic that if a player is sent to a disabledCell they can then click anywhere instead
     }
       
   } else {
-    isCellClickable = false 
     // weeCell.parentElement.classList.add('nopeLight')
-    alert('This cell is not clickable')  
-    console.log('test')  
+    isCellClickable = false 
+      
   }
     
   console.log('player2CellWins', player2CellWins)
@@ -162,34 +163,16 @@ function checkWeeWinnerPlayer1(cellIndex) {
   )
   if (player1HasWon[0]) {
     setTimeout(function(){
-      alert('X is the winner of this small grid')
+      alert('X is the winner of this small grid') 
     }, 50);
     player1CellWins.push(cellIndex)  
-    disabledCells.push(cellIndex)     
+    disabledCells.push(cellIndex)   
   } else if (player1WeeCellArray[cellIndex] + player2WeeCellArray[cellIndex] === 9) {
     setTimeout(function(){
       alert('It\'s a draw for this small grid')
     }, 50);
   }
 }
-
-// function cellHasWinner2(cellIndex) {
-//   if (player2CellWins.includes(cellIndex)) {
-//     disabledCells.push(cellIndex)    
-//   } else if (true) {
-
-//   }
-// }
-
-// function cellHasWinner1(cellIndex) {
-//   if (player1CellWins.includes(cellIndex)) {
-//     disabledCells.push(cellIndex)
-//     isCellClickable = false    
-//   } else if (true) {
-    
-//   }
-// }
-
 
 function checkBoardWinPlayer2 () {
   const boardWinner2 = winningCellCombos.filter( subArray => 
@@ -224,71 +207,7 @@ function checkBoardWinPlayer1 () {
 }
 
 
-
-
-
-// function checkIfBoardWin(cellToCheck) {  
-//   winningCellCombos.map(combos => {
-//     cellToCheck.filter(cellId => {
-//       combos.map(elem => {
-//         elem === cellId
-//       })
-//     })
-//     console.log(cellToCheck)
-//     if (cellToCheck.length === 3) {
-//       console.log("winner")
-//     } else {
-//       console.log("No winner")
-//     }
-//   })
-// }
-
-
-
-
-
 // !Old basic tic tac toe logic 
-
-
- 
-
-// function checkWeeWinnerPlayer1 () {
-//   const player1HasWon = winningWeeCellCombos.filter( subArray =>
-//     subArray.every(elem => player1WeeCellArray.includes(elem))
-//   )
-//   if (player1HasWon[0]) {
-//     setTimeout(function(){
-//       alert('X is the winner')  
-//     }, 50);
-//   } else if (player1WeeCellArray.length + player2WeeCellArray.length === 9) {
-//     setTimeout(function(){
-//       alert('It\'s a draw')
-//     }, 50);
-//   }
-// }
-// function checkUltimateWinnerPlayer1() {
-//   const player1isUltimateWinner = winningCellCombos.filter( subArray =>
-//     subArray.every(elem => player1CellMoves.includes(elem))
-//   )
-//   if (player1isUltimateWinner[0]) {
-//     setTimeout(function() {
-//       alert('X is the winner')
-//     }, 50)
-//   }
-// }
-
-// function checkUltimateWinnerPlayer2() {
-//   const player2isUltimateWinner = winningCellCombos.filter( subArray =>
-//     subArray.every(elem => player2CellMoves.includes(elem))
-//   )
-//   if (player2isUltimateWinner[0]) {
-//     setTimeout(function() {
-//       alert('X is the winner')
-//     }, 50)
-//   }
-// }
-
-
 
 // 1. Creating subArray with player1's choices and then filtering those against 
 //    the winningCombos to see whether player1 wins
