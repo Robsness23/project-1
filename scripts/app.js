@@ -83,16 +83,13 @@ function playGame(event, weeCell) {
   isCellClickable = true    
   console.log('parentElement.id', parseInt(event.target.parentElement.id)) 
   
-  // If these conditions aren't met it moves to next if sta
+  // If these conditions aren't met it moves to next if statement 
   // After this isCellClickable is still false, then it moves to next if
   if (isGameStarted && lastTurn !== parseInt(event.target.parentElement.id) && lastTurn || disabledCells.includes(weeCell.parentElement.id)) {
     isCellClickable = false 
-    // weeCell.parentElement.classList.add('nopeLight')
     alert('This cell is not clickable')
-    // maybe add setTimeout for the light to remove it after a bit
   } 
   console.log(isCellClickable)
-
   if (isCellClickable) {   
     // click anywhere for left condition ORRRR  cell not complete so I can play in that cell
     if ((lastTurn === null && !disabledCells.includes(weeCell.parentElement.id)) || lastTurn) {
@@ -104,7 +101,6 @@ function playGame(event, weeCell) {
         lastTurn = null
       } else {
         lastTurn = parseInt(event.target.id)
-        // weeCell.parentElement.classList.add('goLight')
       }
       console.log('last turn', lastTurn)
       weeCell.classList.add('symbols')  
@@ -207,15 +203,13 @@ function checkBoardWinPlayer1 () {
 }
 
 
-// !Old basic tic tac toe logic 
+// ! MVP tic tac toe logic 
 
 // 1. Creating subArray with player1's choices and then filtering those against 
 //    the winningCombos to see whether player1 wins
 // 2. Alerting, after short timeout if player1 wins 
 // 3. Call the function in the generateGrid function
 // 4. Added draw logic
-
-
 
 // 1. Creating subArray with player2's choices and then filtering those against 
 //    the winningCombos to see whether player2 wins
@@ -237,7 +231,7 @@ function checkBoardWinPlayer1 () {
 // const totalCells = width * width (how to style the wider game?)
 // const cells =[]
 
-// fucntion generateGrid() {
+// function generateGrid() {
 // for i it to 0 to totalCells - 1 {
 //  const cell = document.createElement('div')
 // cell.classList.add('cell')
@@ -248,7 +242,7 @@ function checkBoardWinPlayer1 () {
 
 // generateGrid()
 
-//! 2. Selcting DOM:
+//! 2. Selecting DOM:
 // addEventListeners to all divs in the grid as a click will choose which grid cell player is selecting
 
 // const boardGrid = document.querySelectorAll('div')
